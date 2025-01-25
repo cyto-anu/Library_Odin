@@ -23,7 +23,7 @@ function loopThru() {
     myLibrary.forEach(element => {
 
         const titleDiv = document.createElement("div");
-        titleDiv.classList.add("book");
+        titleDiv.classList.add("title");
         container.appendChild(titleDiv);
         titleDiv.textContent = element.title;
 
@@ -42,7 +42,32 @@ function loopThru() {
         titleDiv.appendChild(readDiv);
         readDiv.textContent = element.read;
 
+        const bookBtn = document.createElement('button');
+        bookBtn.classList.add("bookBtn");
+        titleDiv.appendChild(bookBtn);
+        bookBtn.textContent = "Press Me";
+
     });
 };
 
 loopThru();
+
+
+//adds button to remove the selected book from DOM, display, and the myLibrary array.
+const bookBtn = document.querySelectorAll(".bookBtn");
+
+bookBtn.forEach(element => {
+    element.addEventListener("click", e => {
+        console.log(element.parentElement.firstChild.textContent);
+        element.parentElement.remove();
+
+        myLibrary.forEach(e => {
+            if (e.title === element.parentElement.firstChild.textContent) {
+                myLibrary.splice(e,1);
+            };
+        });
+
+    });
+
+
+});
