@@ -8,11 +8,42 @@
     <title>Library</title>
 </head>
 <body>
-    <div class="container">
+    <div class="wrap">
+        <div class="container">
 
-    </div>
-    <div>
-        <form action="input" method="post" name="book"></form>
+        </div>
+        <div class="form">
+            <form action="example.com/path" method="post">
+                <label for="title">Title: </label>
+                <input type="text" id="title" name="title">
+
+                <br>
+                <br>
+
+                <label for="author">Author: </label>
+                <input type="text" id="author" name="author">
+
+                <br>
+                <br>
+
+                <label for="pages">Pages: </label>
+                <input type="text" id="pages" name="pages">
+
+                <br>
+                <br>
+
+                <label for="read">Read? </label>
+                <input type="checkbox" id="read" name="read" vaule="read">
+
+                <br>
+                <br>
+
+               <button id="submitBtn" type="button"> Add Book</button>
+
+
+            
+            </form>
+        </div>
     </div>
 </body>
 </html>
