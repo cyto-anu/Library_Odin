@@ -13,11 +13,13 @@ function Book(title, author, pages, read) {
 function addBookToLibrary(title, author, pages, read) {
     const newBook = new Book(title, author, pages, read);
     myLibrary.push(newBook);
+
+
 };
 
-addBookToLibrary("Harry Potter", "JK Rowling", 1128, "read")
-addBookToLibrary("Romeo and juliet", "Shakespeare", 184, "read")
-addBookToLibrary("Steve Jobs", "Walter Issaicson", 592, "read")
+addBookToLibrary("Harry Potter", "JK Rowling", 1128, "true")
+addBookToLibrary("Romeo and juliet", "Shakespeare", 184, "false")
+addBookToLibrary("Steve Jobs", "Walter Issaicson", 592, "true")
 
 function loopThru() {
     myLibrary.forEach(element => {
@@ -40,34 +42,142 @@ function loopThru() {
         const readDiv = document.createElement('div');
         readDiv.classList.add("read");
         titleDiv.appendChild(readDiv);
-        readDiv.textContent = element.read;
+        if (element.read == "true") {
+            readDiv.textContent = "read";
+            readDiv.style.border = "2px solid green";
+        } else {
+            readDiv.textContent = "not read";
+            readDiv.style.border = "2px solid red";
+        }
+        
 
-        const bookBtn = document.createElement('button');
-        bookBtn.classList.add("bookBtn");
-        titleDiv.appendChild(bookBtn);
-        bookBtn.textContent = "Press Me";
+        const removeBtn = document.createElement('button');
+        removeBtn.classList.add("removeBtn");
+        titleDiv.appendChild(removeBtn);
+        removeBtn.textContent = "remove book";
+
+
 
     });
+
 };
 
 loopThru();
 
 
 //adds button to remove the selected book from DOM, display, and the myLibrary array.
-const bookBtn = document.querySelectorAll(".bookBtn");
+// const removeBtn = document.querySelectorAll(".removeBtn");
 
-bookBtn.forEach(element => {
-    element.addEventListener("click", e => {
-        console.log(element.parentElement.firstChild.textContent);
-        element.parentElement.remove();
+// removeBtn.forEach(element => {
+//     element.addEventListener("click", e => {
+//         console.log("removed "+element.parentElement.firstChild.textContent);
+//         element.parentElement.remove();
 
-        myLibrary.forEach(e => {
-            if (e.title === element.parentElement.firstChild.textContent) {
-                myLibrary.splice(e,1);
-            };
+//         myLibrary.forEach((event, index) => {
+//             if (event.title === element.parentElement.firstChild.textContent) {
+//                 myLibrary.splice(index,1);
+//             };
+//         });
+
+//     });
+
+// });
+
+
+//form submit
+const submitBtn = document.querySelector("#submitBtn");
+
+function addNewBook () {
+
+    const titleDiv = document.createElement("div");
+    titleDiv.classList.add("title");
+    container.appendChild(titleDiv);
+    titleDiv.textContent = myLibrary[myLibrary.length - 1].title;
+
+    const authorDiv = document.createElement('div');
+    authorDiv.classList.add("author");
+    titleDiv.appendChild(authorDiv);
+    authorDiv.textContent = myLibrary[myLibrary.length - 1].author;
+
+    const pagesDiv = document.createElement('div');
+    pagesDiv.classList.add("pages");
+    titleDiv.appendChild(pagesDiv);
+    pagesDiv.textContent = myLibrary[myLibrary.length - 1].pages;
+
+    const readDiv = document.createElement('div');
+    readDiv.classList.add("read");
+    titleDiv.appendChild(readDiv);
+
+    if (myLibrary[myLibrary.length - 1].read == "true") {
+        readDiv.textContent = "read";
+    } else {
+        readDiv.textContent = "not read";
+        
+    };
+
+
+    const removeBtn = document.createElement('button');
+    removeBtn.classList.add("removeBtn");
+    titleDiv.appendChild(removeBtn);
+    removeBtn.textContent = "remove book";
+
+};
+
+submitBtn.addEventListener("click", event => {
+    event.preventDefault();
+    addBookToLibrary(title.value, author.value, pages.value, read.checked ? "true" : "false");
+    addNewBook();
+} );
+
+
+container.addEventListener("click", e => {
+    if (e.target.classList.contains("removeBtn")) {
+        const bookTitle = e.target.parentElement.firstChild.textContent;
+
+        console.log("removed " + bookTitle);
+        e.target.parentElement.remove();
+
+        myLibrary.forEach((book, index) => {
+            if (book.title === bookTitle) {
+                myLibrary.splice(index, 1);
+            }
         });
+    }
+});
 
-    });
+//read status intial color
 
 
+//changing read status
+
+container.addEventListener("click", e => {
+    if (e.target.classList.contains("read")) {
+
+        if (e.target.textContent === "read") {
+            e.target.textContent = "not read";
+            e.target.style.border = "2px solid red";
+
+            myLibrary.forEach(z => {
+                if (z.title === e.target.parentElement.firstChild.textContent) {
+                    z.read = "false";
+                
+                };
+    
+            });
+            
+        } else {
+            e.target.textContent = "read";
+            e.target.style.border = "3px solid green";
+            
+            myLibrary.forEach(z => {
+                if (z.title === e.target.parentElement.firstChild.textContent) {
+                    z.read = "true";
+                
+                };
+    
+            });
+        };
+
+
+    };
 });
